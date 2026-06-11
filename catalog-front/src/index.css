@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f5ead0;
+  --color-cream-soft: #fbf3df;
+  --color-paper: #f9f0d6;
+  --color-ink: #1d1a2f;
+  --color-cherry: #c8323c;
+  --color-cherry-deep: #8b1f2a;
+  --color-sun: #f0a83a;
+  --color-sun-deep: #d68a1c;
+  --color-mint: #3f9b8a;
+  --color-mint-deep: #2a6f63;
+  --color-pink: #e85a85;
+  --color-plum: #5a3470;
+
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-sans: "Bricolage Grotesque", system-ui, sans-serif;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: #f5ead0;
+    color: #1d1a2f;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  ::selection { background: #c8323c; color: #f5ead0; }
+
+  #root { min-height: 100dvh; position: relative; z-index: 1; }
+
+  /* Tipografía display */
+  .font-display {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 144, "SOFT" 80, "WONK" 0;
+    letter-spacing: -0.02em;
+  }
+  .font-display-italic {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* ====== Capas de fiesta de fondo ====== */
+
+  /* Capa 1: Candy stripes diagonal sutiles */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(200, 50, 60, 0) 0px,
+      rgba(200, 50, 60, 0) 28px,
+      rgba(200, 50, 60, 0.04) 28px,
+      rgba(200, 50, 60, 0.04) 56px
+    );
+  }
+
+  /* Capa 2: Grano de papel vintage */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Inputs estilo ticket */
+  input[type="text"], input[type="date"], textarea {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    cursor: pointer;
+  }
+
+  /* ====== Marquee animation ====== */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 28s linear infinite;
+    will-change: transform;
+  }
+
+  /* ====== Confetti drift ====== */
+  @keyframes confetti-drift {
+    0% { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+    100% { transform: translate3d(var(--drift, 30px), 110vh, 0) rotate(720deg); }
+  }
+  .confetti-bg {
+    position: fixed;
+    top: 0;
+    width: 12px;
+    height: 16px;
+    z-index: 0;
+    pointer-events: none;
+    animation: confetti-drift linear infinite;
+    will-change: transform;
+  }
+
+  /* ====== Star pulse ====== */
+  @keyframes star-twinkle {
+    0%, 100% { opacity: 0.25; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.15); }
+  }
+  .star-twinkle {
+    animation: star-twinkle 4s ease-in-out infinite;
+  }
+
+  /* ====== Ticket stub edges ====== */
+  .ticket-edge {
+    --r: 9px;
+    -webkit-mask:
+      radial-gradient(var(--r) at var(--r) 50%, #0000 98%, #000)
+        calc(-1 * var(--r)) 0 / 100% 100%,
+      radial-gradient(var(--r) at calc(100% - var(--r)) 50%, #0000 98%, #000)
+        var(--r) 0 / 100% 100%;
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+  }
+
+  /* ====== Stamp animation ====== */
+  @keyframes stamp {
+    0% { transform: rotate(-25deg) scale(2.5); opacity: 0; }
+    60% { transform: rotate(-12deg) scale(0.85); opacity: 1; }
+    100% { transform: rotate(-15deg) scale(1); opacity: 1; }
+  }
+  .stamp-in {
+    animation: stamp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Scrollbar personalizado */
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: #f5ead0; }
+  ::-webkit-scrollbar-thumb {
+    background: #c8323c;
+    border: 3px solid #f5ead0;
+    border-radius: 6px;
+  }
+}
